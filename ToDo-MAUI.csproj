@@ -49,10 +49,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\add_squaresvgrepo_com.svg" />
+	  <None Remove="Resources\Images\delete_svgrepo_com.svg" />
+	  <None Remove="Resources\Images\edit_svgrepo_com.svg" />
 	  <None Remove="Resources\Images\task_svgrepo_com.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
