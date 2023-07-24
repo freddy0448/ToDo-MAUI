@@ -23,11 +23,11 @@
                     <Grid 
                           ColumnDefinitions="*, .12*, .12*"
                         ColumnSpacing="10">
-                        <Frame>
+                        <Frame WidthRequest="260">
                             <Label Text="{Binding .}" TextColor="Black" Grid.Column="0" Margin="0"/>
                         </Frame>
                         <Button ImageSource="edit_svgrepo_com" Grid.Column="1"/>
-                        <Button ImageSource="delete_svgrepo_com.png" Grid.Column="2"/>
+                        <Button ImageSource="delete_svgrepo_com.png" Grid.Column="2" Command="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTaskCommand}"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

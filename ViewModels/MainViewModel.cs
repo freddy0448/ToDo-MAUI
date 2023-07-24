@@ -1,12 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using ToDo_MAUI.Model;
+using ToDo_MAUI.Services;
 
 namespace ToDo_MAUI.ViewModels
 {
     public partial class MainViewModel : ObservableObject
-    {
-        private const string accessKey = "TasksSaved";
+    {         
+        ITaskService taskService;
 
         [ObservableProperty]
         ObservableCollection<string> tasks;
@@ -19,40 +21,61 @@ namespace ToDo_MAUI.ViewModels
 
         [ObservableProperty]
         string savedTasks;
-        public MainViewModel()
+
+
+        public MainViewModel(ITaskService taskService)
         {
             tasks = new ObservableCollection<string>();
+            this.taskService  = taskService;
         }
 
         [RelayCommand]
-        void AddTask()
+        async void AddTask()
         {
-            if (string.IsNullOrEmpty(taskInput))
-                return;
-            SavingTasks = TaskInput;
+            //await taskService.AddTaskAsync();
 
-            SaveTask();
-            GetTask();
+            var response = await taskService.AddTaskAsync(new TaskModel
+            {
+                Task = TaskInput
+                
+            });
+
             TaskInput = string.Empty;
 
-            
-            if (string.IsNullOrEmpty(SavedTasks))
-                return;
-
-            Tasks.Add(SavedTasks);
+            if (response > 0)
+            {
+                await Shell.Current.DisplayAlert("Registro de Tareas", "Tarea registrada con éxito", "OK");
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Registro de Tareas", "Fallo en el registro de la tarea", "OK");
+            }
         }
 
         [RelayCommand]
         async void GetTask()
         {
-            SavedTasks = await SecureStorage.Default.GetAsync(accessKey);
+
         }
 
         [RelayCommand]
         async void SaveTask()
         {
-            await SecureStorage.Default.SetAsync(accessKey, SavingTasks);
+
         }
 
+        [RelayCommand]
+        async void DeleteTask()
+        {
+
+        }
+
+        [RelayCommand]
+        void GetId(TaskModel taskModel)
+        {
+            if (taskModel == null) return;
+
+            //var rout = $"{}";
+        }
     }
 }

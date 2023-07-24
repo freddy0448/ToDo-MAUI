@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ToDo_MAUI.Services;
 using ToDo_MAUI.ViewModels;
 
 namespace ToDo_MAUI
@@ -20,6 +21,7 @@ namespace ToDo_MAUI
 		builder.Logging.AddDebug();
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<ITaskService, TaskService>();
 #endif
 
             return builder.Build();
