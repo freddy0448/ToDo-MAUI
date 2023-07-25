@@ -7,7 +7,7 @@ namespace ToDo_MAUI.Services
     {
         static SQLiteAsyncConnection db;
 
-        private  async Task Init()
+        private async Task Init()
         {
             if (db != null)
                 return;
@@ -18,19 +18,19 @@ namespace ToDo_MAUI.Services
             await db.CreateTableAsync<TaskModel>();
         }
 
-        public  async Task<int> AddTaskAsync(TaskModel taskModel)
+        public async Task<int> AddTaskAsync(TaskModel taskModel)
         {
             await Init();
+
             return await db.InsertAsync(taskModel);
         }
 
-        public  async Task<IEnumerable<TaskModel>> GetAllTasksAsync()
+        public async Task<List<TaskModel>> GetAllTasksAsync()
         {
             await Init();
 
             var tasksList = await db.Table<TaskModel>().ToListAsync();
             return tasksList;
-            
         }
 
 

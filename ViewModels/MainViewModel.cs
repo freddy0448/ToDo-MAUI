@@ -7,7 +7,7 @@ using ToDo_MAUI.Services;
 namespace ToDo_MAUI.ViewModels
 {
     public partial class MainViewModel : ObservableObject
-    {         
+    {
         ITaskService taskService;
 
         [ObservableProperty]
@@ -26,20 +26,21 @@ namespace ToDo_MAUI.ViewModels
         public MainViewModel(ITaskService taskService)
         {
             tasks = new ObservableCollection<string>();
-            this.taskService  = taskService;
+            this.taskService = taskService;
         }
 
         [RelayCommand]
-        async void AddTask()
+        async void AddSaveTask()
         {
             //await taskService.AddTaskAsync();
+            if (string.IsNullOrEmpty(TaskInput)) return;
 
             var response = await taskService.AddTaskAsync(new TaskModel
             {
                 Task = TaskInput
-                
             });
 
+            Tasks.Add(TaskInput);
             TaskInput = string.Empty;
 
             if (response > 0)
@@ -53,15 +54,18 @@ namespace ToDo_MAUI.ViewModels
         }
 
         [RelayCommand]
-        async void GetTask()
+        public async void GetTask()
         {
+            var taskResult = await taskService.GetAllTasksAsync();
 
-        }
-
-        [RelayCommand]
-        async void SaveTask()
-        {
-
+            if (taskResult.Count > 0)
+            {
+                Tasks.Clear();
+                foreach (var item in taskResult)
+                {
+                    Tasks.Add(item.Task);
+                }
+            }
         }
 
         [RelayCommand]

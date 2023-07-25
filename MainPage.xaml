@@ -15,14 +15,15 @@
         <Label Text="Tasks" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" Grid.ColumnSpan="3" Grid.Row="1"/>
 
         <Entry  Placeholder="Tarea" Grid.Column="0" Grid.Row="2" ClearButtonVisibility="WhileEditing" Text="{Binding TaskInput}" Keyboard="Text"/>
-        <Button ImageSource="add_squaresvgrepo_com" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" BackgroundColor="White" Command="{Binding AddTaskCommand}"/>
+        <Button ImageSource="add_squaresvgrepo_com" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" BackgroundColor="White" Command="{Binding AddSaveTaskCommand}"/>
 
-        <CollectionView ItemsSource="{Binding Tasks}" Grid.ColumnSpan="2"  Grid.Row="3">
-            <CollectionView.ItemTemplate>
+        <ListView ItemsSource="{Binding Tasks}" Grid.ColumnSpan="2"  Grid.Row="3" IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetTaskCommand}">
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type x:String}">
                     <Grid 
                           ColumnDefinitions="*, .12*, .12*"
-                        ColumnSpacing="10">
+                        ColumnSpacing="7"
+                        WidthRequest="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeviceWidth}">
                         <Frame WidthRequest="260">
                             <Label Text="{Binding .}" TextColor="Black" Grid.Column="0" Margin="0"/>
                         </Frame>
@@ -30,7 +31,7 @@
                         <Button ImageSource="delete_svgrepo_com.png" Grid.Column="2" Command="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTaskCommand}"/>
                     </Grid>
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentPage>
