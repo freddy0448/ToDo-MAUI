@@ -34,11 +34,11 @@ namespace ToDo_MAUI.Services
         }
 
 
-        public async Task DeleteTaskAsync(int id)
+        public async Task<int> DeleteTaskAsync(TaskModel taskModel)
         {
             await Init();
 
-            await db.DeleteAsync(id);
+            return await db.DeleteAsync(taskModel);
         }
 
     }

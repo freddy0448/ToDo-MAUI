@@ -17,19 +17,21 @@
         <Entry  Placeholder="Tarea" Grid.Column="0" Grid.Row="2" ClearButtonVisibility="WhileEditing" Text="{Binding TaskInput}" Keyboard="Text"/>
         <Button ImageSource="add_squaresvgrepo_com" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" BackgroundColor="White" Command="{Binding AddSaveTaskCommand}"/>
 
-        <ListView ItemsSource="{Binding Tasks}" Grid.ColumnSpan="2"  Grid.Row="3" IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetTaskCommand}">
+        <ListView ItemsSource="{Binding Tasks}" Grid.ColumnSpan="2"  Grid.Row="3"  IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetTaskCommand}" IsRefreshing="{Binding Refresh}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type x:String}">
-                    <Grid 
-                          ColumnDefinitions="*, .12*, .12*"
+                    <ViewCell>
+                        <Grid 
+                        ColumnDefinitions="*, .12*, .12*"
                         ColumnSpacing="7"
-                        WidthRequest="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeviceWidth}">
-                        <Frame WidthRequest="260">
-                            <Label Text="{Binding .}" TextColor="Black" Grid.Column="0" Margin="0"/>
-                        </Frame>
-                        <Button ImageSource="edit_svgrepo_com" Grid.Column="1"/>
-                        <Button ImageSource="delete_svgrepo_com.png" Grid.Column="2" Command="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTaskCommand}"/>
-                    </Grid>
+                            IsVisible="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=GridVisible}">
+    
+                            <Label Text="{Binding .}" TextColor="White" Grid.Column="0" Margin="0"/>
+                            <Button ImageSource="edit_svgrepo_com" Grid.Column="1"/>
+                            <Button ImageSource="delete_svgrepo_com.png" Grid.Column="2" Command="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTaskCommand}" CommandParameter="{Binding .}"/>
+
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

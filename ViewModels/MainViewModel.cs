@@ -11,22 +11,26 @@ namespace ToDo_MAUI.ViewModels
         ITaskService taskService;
 
         [ObservableProperty]
-        ObservableCollection<string> tasks;
+        bool refresh;
+
+        [ObservableProperty]
+        bool gridVisible;
+
+        [ObservableProperty]
+        ObservableCollection<TaskModel>? tasks;
+
+        [ObservableProperty]
+        TaskModel? tasks2;
 
         [ObservableProperty]
         string taskInput;
 
-        [ObservableProperty]
-        string savingTasks;
-
-        [ObservableProperty]
-        string savedTasks;
-
-
         public MainViewModel(ITaskService taskService)
         {
-            tasks = new ObservableCollection<string>();
+            tasks = new ObservableCollection<TaskModel>();
+            tasks2 = new TaskModel();
             this.taskService = taskService;
+            GridVisible = true;
         }
 
         [RelayCommand]
@@ -40,7 +44,8 @@ namespace ToDo_MAUI.ViewModels
                 Task = TaskInput
             });
 
-            Tasks.Add(TaskInput);
+            Tasks2.Task = TaskInput;
+            Tasks.Add(taskOutput);
             TaskInput = string.Empty;
 
             if (response > 0)
@@ -56,30 +61,36 @@ namespace ToDo_MAUI.ViewModels
         [RelayCommand]
         public async void GetTask()
         {
+            Refresh = true;
+           
             var taskResult = await taskService.GetAllTasksAsync();
-
             if (taskResult.Count > 0)
             {
                 Tasks.Clear();
+
+                //for (int i = 0; i < taskResult.Count; i++)
+                //{
+                //    taskModel2 = taskResult.Cast<ObservableCollection<string>>().ElementAt(i);
+
+                //    taskResult[i] = (TaskModel)taskResult[i];
+                //    Tasks.Add(taskModel2.ToString());
+                //}
+
                 foreach (var item in taskResult)
                 {
-                    Tasks.Add(item.Task);
+                    Tasks.Add(item);
                 }
             }
+
+            Refresh = false;
         }
 
         [RelayCommand]
-        async void DeleteTask()
+        async void DeleteTask(TaskModel taskModel)
         {
-
+            var response = await taskService.DeleteTaskAsync(taskModel);
+            GridVisible = false;
         }
 
-        [RelayCommand]
-        void GetId(TaskModel taskModel)
-        {
-            if (taskModel == null) return;
-
-            //var rout = $"{}";
-        }
     }
 }

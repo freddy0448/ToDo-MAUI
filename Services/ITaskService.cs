@@ -6,6 +6,6 @@ namespace ToDo_MAUI.Services
     {
         Task<int> AddTaskAsync(TaskModel taskModel);
         Task<List<TaskModel>> GetAllTasksAsync();
-        Task DeleteTaskAsync(int id);
+        Task<int> DeleteTaskAsync(TaskModel taskModel);
     }
 }
