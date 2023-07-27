@@ -1,5 +1,4 @@
-﻿using ToDo_MAUI.Services;
-using ToDo_MAUI.ViewModels;
+﻿using ToDo_MAUI.ViewModels;
 
 namespace ToDo_MAUI
 {

@@ -1,4 +1,6 @@
-﻿namespace ToDo_MAUI
+﻿using ToDo_MAUI.Views;
+
+namespace ToDo_MAUI
 {
     public partial class App : Application
     {
@@ -7,6 +9,7 @@
             InitializeComponent();
 
             MainPage = new AppShell();
+            Routing.RegisterRoute(nameof(EditPage), typeof(EditPage));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using ToDo_MAUI.Services;
 using ToDo_MAUI.ViewModels;
+using ToDo_MAUI.Views;
 
 namespace ToDo_MAUI
 {
@@ -22,6 +23,10 @@ namespace ToDo_MAUI
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<ITaskService, TaskService>();
+            
+            builder.Services.AddTransient<EditViewModel>();
+            builder.Services.AddTransient<EditPage>();
+
 #endif
 
             return builder.Build();
