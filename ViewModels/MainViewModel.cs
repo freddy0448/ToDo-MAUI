@@ -12,7 +12,7 @@ namespace ToDo_MAUI.ViewModels
         readonly ITaskService taskService;
 
         [ObservableProperty]
-        bool refresh;
+        public bool refresh;
 
         [ObservableProperty]
         public ObservableCollection<TaskModel> tasks;
@@ -60,7 +60,7 @@ namespace ToDo_MAUI.ViewModels
         {
             Refresh = true;
            
-            var taskResult = await taskService.GetAllTasksAsync();
+            var taskResult = await taskService.GetAllTaskAsync();
             if (taskResult.Count > 0)
             {
                 Tasks.Clear();
@@ -91,9 +91,11 @@ namespace ToDo_MAUI.ViewModels
         }
 
         [RelayCommand]
-        async void NavigateToEdit()
+        async void EditTask(TaskModel taskModel)
         {
-            await Shell.Current.GoToAsync(nameof(EditPage));
+            var varParam = new Dictionary<string, object>();
+            varParam.Add("TaskData", taskModel);
+            await Shell.Current.GoToAsync(nameof(EditPage), varParam);
         }
     }
 }

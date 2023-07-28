@@ -5,39 +5,45 @@
              xmlns:viewmodel="clr-namespace:ToDo_MAUI.ViewModels"
              x:Class="ToDo_MAUI.MainPage">
 
-    <ScrollView>
+    <RefreshView
+        Command="{Binding GetTaskCommand}"
+        IsRefreshing="{Binding Refresh}">
         
-        <Grid
-            RowDefinitions="100, 30, Auto, Auto"
-            ColumnDefinitions=".75*, .12*, .12*"
-            ColumnSpacing="10"
-            RowSpacing="10">
-
-            <Image Source="task_svgrepo_com" Grid.ColumnSpan="3" Grid.Row="0" VerticalOptions="Center" />
-            <Label Text="Tasks" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" Grid.ColumnSpan="3" Grid.Row="1"/>
-
-            <Entry  Placeholder="Tarea" Grid.Column="0" Grid.Row="2" ClearButtonVisibility="WhileEditing" Text="{Binding TaskInput}" Keyboard="Text"/>
-            <Button ImageSource="add_squaresvgrepo_com" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" BackgroundColor="White" Command="{Binding NavigateToEditCommand}"/>
-
-            <ListView ItemsSource="{Binding Tasks}" Grid.ColumnSpan="2"  Grid.Row="3">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type x:String}">
-                        <ViewCell>
-                            <Grid 
-                            ColumnDefinitions="*, .12*, .12*"
-                            ColumnSpacing="7">
-
-                                <Label x:Name="DataLabel" Text="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=Titles}" TextColor="White" Grid.Column="0"/>
-                                <Button ImageSource="edit_svgrepo_com" Grid.Column="1"/>
-                                <Button ImageSource="delete_svgrepo_com.png" Grid.Column="2" Command="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTaskCommand}" 
-                                        CommandParameter="{Binding .}"/>
-
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        <ScrollView>
         
-    </ScrollView>
+            <Grid
+                RowDefinitions="100, 30, Auto, Auto"
+                ColumnDefinitions=".75*, .12*, .12*"
+                ColumnSpacing="10"
+                RowSpacing="10">
+
+                <Image Source="task_svgrepo_com" Grid.ColumnSpan="3" Grid.Row="0" VerticalOptions="Center" />
+                <Label Text="Tasks" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" Grid.ColumnSpan="3" Grid.Row="1"/>
+
+                <Entry  Placeholder="Tarea" Grid.Column="0" Grid.Row="2" ClearButtonVisibility="WhileEditing" Text="{Binding TaskInput}" Keyboard="Text"/>
+                <Button ImageSource="add_squaresvgrepo_com" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" BackgroundColor="White" Command="{Binding AddSaveTaskCommand}"/>
+
+                <ListView ItemsSource="{Binding Tasks}" Grid.ColumnSpan="2"  Grid.Row="3">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type x:String}">
+                            <ViewCell>
+                                <Grid 
+                                ColumnDefinitions="*, .12*, .12*"
+                                ColumnSpacing="7">
+
+                                    <Label x:Name="DataLabel" Text="{Binding .}" TextColor="White" Grid.Column="0"/>
+                                    <Button ImageSource="edit_svgrepo_com" Grid.Column="1" Command="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=EditTaskCommand}" CommandParameter="{Binding .}"/>
+                                    <Button ImageSource="delete_svgrepo_com.png" Grid.Column="2" Command="{Binding Source= {RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTaskCommand}" 
+                                            CommandParameter="{Binding .}"/>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        
+        </ScrollView>
+        
+    </RefreshView>
 </ContentPage>

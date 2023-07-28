@@ -5,11 +5,11 @@
              x:DataType="viewmodel:EditViewModel"
              x:Class="ToDo_MAUI.Views.EditPage"
              Title="Editar">
-    <VerticalStackLayout >
+    <ScrollView>
         <Grid RowDefinitions="100, Auto, Auto" RowSpacing="15">
             <Image Source="edit_svgrepo_com.png" Grid.Row="0"/>
-            <Entry HorizontalOptions="CenterAndExpand" Placeholder="Tarea" Grid.Row="1" WidthRequest="300"></Entry>
-            <Button Text="Guardar Cambios!" Grid.Row="2"></Button>
+            <Entry HorizontalOptions="CenterAndExpand" Placeholder="Tarea" Grid.Row="1" WidthRequest="300" Text="{Binding TaskData.Task}" Keyboard="Text"/>
+            <Button Text="Guardar Cambios!" Grid.Row="2" Command="{Binding UpdateTaskCommand}"/>
         </Grid>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

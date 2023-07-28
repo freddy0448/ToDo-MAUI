@@ -25,7 +25,7 @@ namespace ToDo_MAUI.Services
             return await db.InsertAsync(taskModel);
         }
 
-        public async Task<List<TaskModel>> GetAllTasksAsync()
+        public async Task<List<TaskModel>> GetAllTaskAsync()
         {
             await Init();
 
@@ -39,6 +39,13 @@ namespace ToDo_MAUI.Services
             await Init();
 
             return await db.DeleteAsync(taskModel);
+        }
+
+        public async Task<int> UpdateTaskAsync(TaskModel taskModel)
+        {
+            await Init();
+
+            return await db.UpdateAsync(taskModel);
         }
 
     }
